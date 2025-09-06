@@ -1,0 +1,30 @@
+server:
+  port: 8083
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fitnessrecommendation
+      database: fitnessrecommendation
+
+rabbitmq:
+  exchange:
+    name: fitness.exchange
+  queue:
+    name: activity.queue
+  routing:
+    key: activity.tracking
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:                         # 👈 ADD THIS SECTION
+    hostname: localhost             # force Eureka to use localhost
+    prefer-ip-address: false        # prefer localhost/IP instead of Ina.mshome.net
+    instance-id: ${spring.application.name}:${server.port}
+
+gemini:
+  api:
+    url: ${GEMINI_API_URL}
+    key: ${GEMINI_API_KEY}
